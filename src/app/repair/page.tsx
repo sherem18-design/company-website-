@@ -593,7 +593,7 @@ function RepairAssistant({ onProblemFound }: { onProblemFound: (problem: string)
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {step.options.map((opt) => (
               <button
-                key={opt.value + opt.label}
+                key={opt.label + opt.next}
                 onClick={() => handleOption(opt.label, opt.next)}
                 style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.8)", padding: "11px 16px", textAlign: "left", fontSize: "0.82rem", cursor: "pointer", transition: "all 0.18s", display: "flex", alignItems: "center", gap: 10, lineHeight: 1.4 }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(0,232,124,0.4)"; e.currentTarget.style.background = "rgba(0,232,124,0.06)"; e.currentTarget.style.color = "#fff"; }}
