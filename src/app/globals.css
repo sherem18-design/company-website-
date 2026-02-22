@@ -1,0 +1,632 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ─── */
+:root {
+  --accent: #00e87c;
+  --accent-dim: rgba(0, 232, 124, 0.1);
+  --accent-glow: rgba(0, 232, 124, 0.35);
+  --accent-border: rgba(0, 232, 124, 0.22);
+  --bg: #060608;
+  --bg-2: #0b0c10;
+  --bg-3: #10111a;
+  --border: rgba(255, 255, 255, 0.055);
+  --border-bright: rgba(255, 255, 255, 0.1);
+}
+
+@theme inline {
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: #ffffff;
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: #ffffff;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── Custom scrollbar ─── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ─── Text selection ─── */
+::selection {
+  background: rgba(0, 232, 124, 0.25);
+  color: #fff;
+}
+
+/* ─── HUD system headings ─── */
+.hud-title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.hud-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ─── Section heading accent block ─── */
+.section-heading {
+  position: relative;
+  padding-bottom: 1.25rem;
+}
+.section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 3.5rem;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* ─── Cards ─── */
+.hud-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.hud-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 0%, var(--accent-dim) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.hud-card:hover {
+  border-color: var(--accent-border);
+  box-shadow: 0 0 28px rgba(0, 232, 124, 0.06), inset 0 1px 0 rgba(0, 232, 124, 0.08);
+}
+.hud-card:hover::before {
+  opacity: 1;
+}
+
+/* Cut-corner card variant */
+.hud-card-cut {
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+/* ─── Corner brackets ─── */
+.bracket-tl::before,
+.bracket-tl::after,
+.bracket-br::before,
+.bracket-br::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.bracket-tl::before {
+  top: 0;
+  left: 0;
+  border-top: 1px solid var(--accent);
+  border-left: 1px solid var(--accent);
+  opacity: 0.6;
+}
+.bracket-tl::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+  opacity: 0.6;
+}
+
+/* ─── Buttons ─── */
+.btn-primary {
+  background: var(--accent);
+  color: #040508;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.55s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 32px var(--accent-glow), 0 4px 20px rgba(0, 232, 124, 0.2);
+  transform: translateY(-1px);
+}
+.btn-primary:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-neon {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.btn-neon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent-dim);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.btn-neon:hover {
+  color: #fff;
+  box-shadow: 0 0 24px var(--accent-glow);
+}
+.btn-neon:hover::before {
+  transform: scaleX(1);
+}
+
+/* ─── Section divider ─── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent-border) 25%,
+    rgba(0, 232, 124, 0.5) 50%,
+    var(--accent-border) 75%,
+    transparent 100%
+  );
+  position: relative;
+}
+
+/* ─── Noise grain overlay ─── */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 25;
+  opacity: 0.38;
+  mix-blend-mode: overlay;
+}
+
+/* ─── Stat number ─── */
+.stat-number {
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Step connector ─── */
+.step-line {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: calc(100% - 3rem);
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-border) 0%, transparent 100%);
+  transform: translateY(-50%) translateX(50%);
+}
+
+/* ─── Logo 360° rotating glow ─── */
+@property --logo-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes logoGlowSpin {
+  to { --logo-angle: 360deg; }
+}
+
+.logo-glow-border {
+  position: absolute;
+  inset: -5px;
+  border-radius: 3px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--logo-angle),
+    transparent 0%,
+    transparent 30%,
+    rgba(0, 232, 124, 0.15) 42%,
+    rgba(0, 232, 124, 0.9) 50%,
+    rgba(57, 255, 140, 1) 55%,
+    rgba(0, 232, 124, 0.9) 58%,
+    rgba(0, 232, 124, 0.15) 68%,
+    transparent 80%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: logoGlowSpin 3s linear infinite;
+  z-index: 1;
+}
+
+.logo-glow-border::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 2px;
+  background: conic-gradient(
+    from var(--logo-angle),
+    transparent 0%,
+    transparent 38%,
+    rgba(0, 232, 124, 0.3) 50%,
+    rgba(57, 255, 140, 0.5) 55%,
+    rgba(0, 232, 124, 0.3) 62%,
+    transparent 72%,
+    transparent 100%
+  );
+  filter: blur(6px);
+  animation: logoGlowSpin 3s linear infinite;
+  pointer-events: none;
+}
+
+/* ─── Keyframes ─── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slowZoom {
+  0% { transform: scale(1.04); }
+  50% { transform: scale(1.09); }
+  100% { transform: scale(1.04); }
+}
+
+@keyframes scanLine {
+  0% {
+    top: -120px;
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent); }
+  50% { opacity: 0.3; box-shadow: none; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--accent-glow); }
+  50% { box-shadow: 0 0 28px var(--accent-glow), 0 0 50px rgba(0, 232, 124, 0.15); }
+}
+
+@keyframes borderFlick {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.4; }
+}
+
+.animate-fade-up {
+  animation: fadeUp 1s ease-out both;
+}
+
+.animate-fade-up-delay {
+  animation: fadeUp 1s ease-out 0.25s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fadeUp 1s ease-out 0.5s both;
+}
+
+.animate-pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+/* ─── CSS-only interactive hover patterns (no JS needed) ─── */
+
+/* Generic border highlight on hover */
+.hover-border {
+  border: 1px solid var(--border);
+  transition: border-color 0.2s ease;
+}
+.hover-border:hover {
+  border-color: var(--accent-border);
+}
+
+/* Left accent stripe + background change on hover */
+.hover-left-accent {
+  border: 1px solid var(--border);
+  border-left: 2px solid transparent;
+  background: var(--bg-2);
+  transition: border-left-color 0.22s ease, background 0.22s ease;
+}
+.hover-left-accent:hover {
+  border-left-color: var(--accent);
+  background: var(--bg-3);
+}
+
+/* Step card: bg-3 base, border lights up on hover */
+.hover-step {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s ease;
+}
+.hover-step:hover {
+  border-color: var(--accent-border);
+}
+
+/* Step number: dim by default, brightens when parent is hovered */
+.hover-step .step-num-dim {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+.hover-step:hover .step-num-dim {
+  opacity: 0.5;
+}
+
+/* Contact primary/highlighted card */
+.hover-contact-primary {
+  background: rgba(0, 232, 124, 0.06);
+  border: 1px solid var(--accent-border);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-contact-primary:hover {
+  background: rgba(0, 232, 124, 0.1);
+  box-shadow: 0 0 40px rgba(0, 232, 124, 0.12);
+}
+
+/* ─── Mobile: strip heavy effects ─── */
+@media (max-width: 768px) {
+  .grain::after {
+    display: none;
+  }
+  .hud-lines-hero {
+    display: none;
+  }
+  .step-line {
+    display: none;
+  }
+}
+
+/* ─── Neuro-cosmic animated section background ─── */
+@keyframes neuroFloat {
+  0%, 100% { transform: translate(0, 0); }
+  38% { transform: translate(18px, -14px); }
+  72% { transform: translate(-12px, 9px); }
+}
+@keyframes neuroFade {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+@keyframes holoDrift {
+  0% { transform: translateX(-110%) skewX(-12deg); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 0.6; }
+  100% { transform: translateX(110%) skewX(-12deg); opacity: 0; }
+}
+
+.neuro-section {
+  position: relative;
+  overflow: hidden;
+}
+.neuro-section > .neuro-bg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.neuro-section > .neuro-bg-layer .nb-orb-a {
+  position: absolute;
+  width: 70%; height: 60%;
+  top: -15%; left: -10%;
+  background: radial-gradient(ellipse, rgba(0,232,124,0.042) 0%, transparent 65%);
+  animation: neuroFloat 22s ease-in-out infinite;
+}
+.neuro-section > .neuro-bg-layer .nb-orb-b {
+  position: absolute;
+  width: 55%; height: 50%;
+  bottom: -15%; right: -8%;
+  background: radial-gradient(ellipse, rgba(0,232,124,0.032) 0%, transparent 60%);
+  animation: neuroFloat 28s ease-in-out infinite reverse;
+}
+.neuro-section > .neuro-bg-layer .nb-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,232,124,0.016) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,232,124,0.016) 1px, transparent 1px);
+  background-size: 76px 76px;
+  animation: neuroFade 14s ease-in-out infinite;
+}
+.neuro-section > .neuro-bg-layer .nb-streak {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 180px;
+  background: linear-gradient(90deg, transparent, rgba(0,232,124,0.022), transparent);
+  animation: holoDrift 18s ease-in-out infinite;
+}
+.neuro-section > .neuro-bg-layer .nb-streak-2 {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(0,232,124,0.014), transparent);
+  animation: holoDrift 24s ease-in-out infinite 9s;
+}
+
+/* ─── Neuro icon container (for service / capability cards) ─── */
+.neuro-icon {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(0,18,8,0.96) 0%, rgba(0,28,14,0.92) 100%);
+  border: 1px solid rgba(0,232,124,0.18);
+  box-shadow: 0 0 18px rgba(0,232,124,0.07) inset, 0 4px 24px rgba(0,0,0,0.55);
+}
+.neuro-icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,232,124,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,232,124,0.04) 1px, transparent 1px);
+  background-size: 10px 10px;
+  pointer-events: none;
+}
+.neuro-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0,232,124,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ─── 3D hover tilt for capability cards ─── */
+.card-3d {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transform-style: preserve-3d;
+}
+.card-3d:hover {
+  transform: perspective(600px) rotateX(-4deg) rotateY(3deg) translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,232,124,0.1), 0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* ─── About section service cards ─── */
+.about-svc-item {
+  border-left: 2px solid transparent;
+  transition: border-left-color 0.22s ease, box-shadow 0.22s ease;
+}
+.about-svc-item:hover {
+  border-left-color: rgba(0, 232, 124, 0.55);
+  box-shadow: 0 0 18px rgba(0, 232, 124, 0.06) inset;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── Footer links ─── */
+.footer-link {
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover {
+  color: var(--accent);
+}
+
+.footer-link-sm {
+  color: rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link-sm:hover {
+  color: rgba(0, 232, 124, 0.7);
+}
+
+/* ─── Lite mode overrides ─── */
+
+/*
+ * All CSS animations and transitions are cut to near-zero.
+ * Elements marked .lite-hide are fully removed from layout.
+ */
+.lite-mode .lite-hide {
+  display: none !important;
+}
+
+/* Kill keyframe animations */
+.lite-mode *,
+.lite-mode *::before,
+.lite-mode *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Disable the hero video slowZoom animation is already covered above */
+
+/* Disable grain pseudo-element on sections */
+.lite-mode .grain::before,
+.lite-mode .grain::after {
+  display: none !important;
+}
+
+/* Reveal component: show content immediately without transition */
+.lite-mode [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Reduce box-shadow complexity for better paint perf */
+.lite-mode .hud-card {
+  box-shadow: none !important;
+}
+
+/* Disable backdrop-filter blurs on cards (expensive on low-end GPUs) */
+.lite-mode .hud-card,
+.lite-mode [style*="backdrop-filter"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Remove accent glow text-shadows */
+.lite-mode h1,
+.lite-mode h2,
+.lite-mode h3 {
+  text-shadow: none !important;
+}
