@@ -17,7 +17,9 @@ function getPlaneDims(w: number, h: number) {
 
 /** Map texture with CSS object-fit:cover behaviour */
 function applyCoverUV(texture: THREE.Texture, planeW: number, planeH: number) {
-  const texAspect = texture.image.width / texture.image.height;
+  const img = texture.image as { width: number; height: number } | undefined;
+  if (!img || typeof img.width !== 'number' || typeof img.height !== 'number') return;
+  const texAspect = img.width / img.height;
   const planeAspect = planeW / planeH;
   if (planeAspect > texAspect) {
     // plane wider → crop top/bottom
