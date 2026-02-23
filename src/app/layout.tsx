@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
@@ -32,6 +32,12 @@ export const metadata: Metadata = {
   title: "Е-Спасатель — Технологическая платформа поддержки автомобилистов",
   description:
     "Цифровая система помощи при ДТП, страховании и дорожных ситуациях. Федеральный охват. Работаем 24/7.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({

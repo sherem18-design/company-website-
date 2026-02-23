@@ -28,7 +28,7 @@ export default function VideoHero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden grain"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden grain hero-mobile-safe"
     >
       {/* ── Background layer ── */}
       <div className="absolute inset-0 z-0">

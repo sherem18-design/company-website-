@@ -421,7 +421,7 @@ body {
   box-shadow: 0 0 40px rgba(0, 232, 124, 0.12);
 }
 
-/* ─── Mobile: strip heavy effects ─── */
+/* ─── Mobile: strip heavy effects + fix viewport height ─── */
 @media (max-width: 768px) {
   .grain::after {
     display: none;
@@ -431,6 +431,13 @@ body {
   }
   .step-line {
     display: none;
+  }
+  /* Fix "cut in half" on mobile: 100vh includes address bar area, 100dvh adapts */
+  .hero-mobile-safe {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
