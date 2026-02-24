@@ -28,10 +28,25 @@ const geistMono = Geist_Mono({
   display: "optional",
 });
 
+const SITE_URL = "https://еспасатель.рф";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Е-Спасатель — Технологическая платформа поддержки автомобилистов",
   description:
     "Цифровая система помощи при ДТП, страховании и дорожных ситуациях. Федеральный охват. Работаем 24/7.",
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: SITE_URL,
+    siteName: "Е-Спасатель",
+    title: "Е-Спасатель — Технологическая платформа поддержки автомобилистов",
+    description:
+      "Цифровая система помощи при ДТП, страховании и дорожных ситуациях. Федеральный охват. Работаем 24/7.",
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 export const viewport: Viewport = {
